@@ -6,8 +6,11 @@ class PresenceController {
 
     public function index()
     {
+        $presences = PresenceModel::getAll();
         require __DIR__ . '/../views/presence/index.php';
     }
+
+    
 
     public function scan()
     {
@@ -29,7 +32,7 @@ class PresenceController {
                 $message = "Carte inconnue";
             }
         }
-    
+        $presences = PresenceModel::getAll();
         
         
 

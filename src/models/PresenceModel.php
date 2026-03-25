@@ -33,5 +33,16 @@ class PresenceModel {
         $membre['prenom']
     ]);
 }
+public static function getAll()
+{
+    $db = Database::compta();
+
+    $stmt = $db->query("
+        SELECT * FROM fiche_presence
+        ORDER BY date_presence DESC, heure_presence DESC
+    ");
+
+    return $stmt->fetchAll(PDO::FETCH_ASSOC);
+}
 
 }
