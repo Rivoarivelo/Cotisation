@@ -1,18 +1,21 @@
 <?php
-require_once __DIR__ . '/../config/role_admin.php';
+// require_once __DIR__ . '/../config/role_admin.php';
 require_once __DIR__ . '/../models/ResponsableModel.php';
 
-class ResponsableController {
+class ResponsableController
+{
 
-    public function index() {
+    public function index()
+    {
         $responsables = ResponsableModel::getAll();
         // echo "Gestion des responsables (ADMIN seulement)";
         // require __DIR__ . '/../views/responsables/index.php';
-         $view = __DIR__ . '/../views/responsables/index.php';
+        $view = __DIR__ . '/../views/responsables/index.php';
         require __DIR__ . '/../views/layout/dashboard.php';
     }
 
-    public function add() {
+    public function add()
+    {
         if ($_POST) {
             ResponsableModel::insert([
                 $_POST['nom'],
@@ -28,11 +31,12 @@ class ResponsableController {
         }
 
         // require __DIR__ . '/../views/responsables/add.php';
-         $view = __DIR__ . '/../views/responsables/add.php';
+        $view = __DIR__ . '/../views/responsables/add.php';
         require __DIR__ . '/../views/layout/dashboard.php';
     }
 
-    public function edit() {
+    public function edit()
+    {
         $id = $_GET['id'];
         $responsable = ResponsableModel::find($id);
 
@@ -50,11 +54,12 @@ class ResponsableController {
         }
 
         // require __DIR__ . '/../views/responsables/edit.php';
-         $view = __DIR__ . '/../views/responsables/edit.php';
+        $view = __DIR__ . '/../views/responsables/edit.php';
         require __DIR__ . '/../views/layout/dashboard.php';
     }
 
-    public function delete() {
+    public function delete()
+    {
         ResponsableModel::delete($_GET['id']);
         header("Location: index.php?controller=responsable");
         exit;

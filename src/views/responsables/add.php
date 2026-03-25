@@ -21,7 +21,8 @@
               placeholder="Téléphone">
 
             <select name="role" class="form-control mb-3 fs-6 border border-1 border-darken">
-              <option value="RESPONSABLE">RESPONSABLE</option>
+              <option value="RESPONSABLE">COMPTABLE</option>
+              <option value="BUREAU">BUREAU</option>
               <option value="ADMIN">ADMIN</option>
             </select>
 

@@ -17,8 +17,12 @@
             <input name="telephone" value="<?= $responsable['telephoneresponsable'] ?>" class="form-control mb-2 fs-6">
 
             <select name="role" class="form-control mb-3 fs-6">
-              <option <?= $responsable['role']=='RESPONSABLE'?'selected':'' ?>>RESPONSABLE</option>
-              <option <?= $responsable['role']=='ADMIN'?'selected':'' ?>>ADMIN</option>
+              <option value="RESPONSABLE" <?= $responsable['role'] == 'RESPONSABLE' ? 'selected' : '' ?>>
+                COMPTABLE</option>
+              <option value="BUREAU" <?= $responsable['role'] == 'BUREAU' ? 'selected' : '' ?>>BUREAU
+              </option>
+              <option value="ADMIN" <?= $responsable['role'] == 'ADMIN' ? 'selected' : '' ?>>ADMIN
+              </option>
             </select>
 
             <button class="btn btn-darken">Mettre à jour</button>
