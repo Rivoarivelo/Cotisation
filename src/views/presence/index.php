@@ -8,22 +8,21 @@
         <input type="date" id="date_event" class="form-control">
     </div>
 
-    <!-- TABLE -->
-    <table class="table table-bordered table-striped">
-        <thead class="table-dark">
+    <h4>Demandes de présence</h4>
+
+    <table class="table table-bordered">
+        <thead>
             <tr>
-                <th>CIN</th>
                 <th>Nom</th>
                 <th>Prénom</th>
-                <th>Date</th>
-                <th>Heure</th>
+                <th>Action</th>
             </tr>
         </thead>
 
-        <tbody id="listePresence"></tbody>
+        <tbody id="listeTemp"></tbody>
     </table>
 
-    <button onclick="validerPresence()" class="btn btn-success w-100">
+    <button onclick="validerPresenceFinal()" class="btn btn-primary w-100 mt-3">
         Valider présence
     </button>
 
@@ -106,6 +105,87 @@
                 titre: titre,
                 date_event: date_event,
                 liste: liste
+            })
+        })
+            .then(res => res.json())
+            .then(res => {
+                window.location.href = res.redirect;
+            });
+    }
+
+
+    // charger demandes en attente
+    function chargerDemandes() {
+
+        fetch("index.php?controller=presence&action=getTemp")
+            .then(res => res.json())
+            .then(data => {
+
+                let html = '';
+
+                data.forEach(m => {
+
+                    html += `
+            <tr>
+                <td>${m.nom}</td>
+                <td>${m.prenom}</td>
+                <td>
+                    <button onclick="valider(${m.id})" class="btn btn-success btn-sm">✔</button>
+                    <button onclick="rejeter(${m.id})" class="btn btn-danger btn-sm">✖</button>
+                </td>
+            </tr>`;
+                });
+
+                document.getElementById('listeTemp').innerHTML = html;
+            });
+    }
+
+    // auto refresh (temps réel)
+    setInterval(chargerDemandes, 2000);
+
+    // valider demande
+    function valider(id) {
+
+        fetch("index.php?controller=presence&action=validerTemp", {
+            method: "POST",
+            headers: {
+                'Content-Type': 'application/x-www-form-urlencoded'
+            },
+            body: `id=${id}`
+        })
+            .then(() => chargerDemandes());
+    }
+
+    function rejeter(id) {
+
+        fetch("index.php?controller=presence&action=rejeterTemp", {
+            method: "POST",
+            headers: {
+                'Content-Type': 'application/x-www-form-urlencoded'
+            },
+            body: `id=${id}`
+        })
+            .then(() => chargerDemandes());
+    }
+
+    function validerPresenceFinal() {
+
+        let titre = document.getElementById('titre').value;
+        let date_event = document.getElementById('date_event').value;
+
+        if (!titre || !date_event) {
+            alert("Remplir le motif et la date");
+            return;
+        }
+
+        fetch("index.php?controller=presence&action=validerAll", {
+            method: "POST",
+            headers: {
+                'Content-Type': 'application/json'
+            },
+            body: JSON.stringify({
+                titre: titre,
+                date_event: date_event
             })
         })
             .then(res => res.json())

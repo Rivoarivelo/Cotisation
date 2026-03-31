@@ -34,9 +34,11 @@ class CarteController
 // ."&numcart=".urlencode($membre['numcart'])
 // ."&code=".urlencode($membre['code_secret']);
 
-        $url = BASE_URL .
-            "index.php?controller=presence&action=scan"
-            . "&cin=" . $membre['CIN'];
+
+        $url = "http://192.168.137.34/cotisation/public/index.php?controller=verification&action=formulaire"
+            . "&cin=" . $membre['CIN']
+            . "&numcart=" . urlencode($membre['numcart'])
+            . "&code=" . $membre['code_secret'];
 
         $result = Builder::create()
             ->writer(new PngWriter())

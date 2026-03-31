@@ -2,6 +2,7 @@
 
 require_once __DIR__ . '/../models/PresenceModel.php';
 require_once __DIR__ . '/../models/MembreModel.php';
+require_once __DIR__ . '/../models/PresenceTempModel.php';
 
 class PresenceController
 {
@@ -113,8 +114,8 @@ class PresenceController
         foreach ($data['liste'] as $m) {
             $pdf->Cell(50, 10, $m['nom'], 1);
             $pdf->Cell(50, 10, $m['prenom'], 1);
-            $pdf->Cell(50, 10, $m['date'], 1);
-            $pdf->Cell(50, 10, $m['heure'], 1);
+            // $pdf->Cell(50, 10, $m['date_event'], 1);
+            // $pdf->Cell(50, 10, $m['heure_presence'], 1);
 
 
             $pdf->Ln();
@@ -122,4 +123,64 @@ class PresenceController
 
         $pdf->Output();
     }
+
+
+    // 🔴 récupérer en temps réel
+    public function getTemp()
+    {
+        header('Content-Type: application/json');
+        echo json_encode(PresenceTempModel::getEnAttente());
+    }
+
+    // ✅ valider présence
+    public function validerTemp()
+    {
+        $id = $_POST['id'];
+
+        PresenceTempModel::valider($id);
+
+        echo json_encode(['success' => true]);
+    }
+
+    // ❌ rejeter
+    public function rejeterTemp()
+    {
+        $id = $_POST['id'];
+
+        PresenceTempModel::rejeter($id);
+
+        echo json_encode(['success' => true]);
+    }
+
+    public function validerAll()
+    {
+        $data = json_decode(file_get_contents("php://input"), true);
+
+        $titre = $data['titre'];
+        $date_event = $data['date_event'];
+
+        $membres = PresenceTempModel::getValide();
+
+        foreach ($membres as $m) {
+
+            PresenceModel::enregistrer([
+                'CIN' => $m['cin'],
+                'numcart' => $m['num_carte'],
+                'nom' => $m['nom'],
+                'prenom' => $m['prenom']
+            ], $titre, $date_event);
+        }
+
+        $_SESSION['presence_data'] = [
+            'titre' => $titre,
+            'date_event' => $date_event,
+            'liste' => $membres
+        ];
+
+        echo json_encode([
+            'redirect' => 'index.php?controller=presence&action=liste'
+        ]);
+    }
+
+
 }
