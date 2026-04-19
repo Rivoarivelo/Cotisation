@@ -39,21 +39,21 @@
                     </a>
                 </li>
                 <?php if ($_SESSION['user']['role'] === 'ADMIN' || $_SESSION['user']['role'] === 'COMPTABLE'): ?>
-                    <li class="nxl-item nxl-hasmenu">
-                        <a href="#" class="nxl-link">
-                            <span class="nxl-micon"><i class="feather-dollar-sign"></i></span>
-                            <span class="nxl-mtext fs-6">Paiements</span><span class="nxl-arrow"><i
-                                    class="feather-chevron-right"></i></span>
-                        </a>
-                        <ul class="nxl-submenu">
-                            <li class="nxl-item"><a class="nxl-link fs-6"
-                                    href="index.php?controller=paiement&action=add">Payer</a>
-                            </li>
-                            <li class="nxl-item"><a class="nxl-link fs-6"
-                                    href="index.php?controller=paiement&action=index">Liste des
-                                    payements</a></li>
-                        </ul>
-                    </li>
+                <li class="nxl-item nxl-hasmenu">
+                    <a href="#" class="nxl-link">
+                        <span class="nxl-micon"><i class="feather-dollar-sign"></i></span>
+                        <span class="nxl-mtext fs-6">Paiements</span><span class="nxl-arrow"><i
+                                class="feather-chevron-right"></i></span>
+                    </a>
+                    <ul class="nxl-submenu">
+                        <li class="nxl-item"><a class="nxl-link fs-6"
+                                href="index.php?controller=paiement&action=add">Payer</a>
+                        </li>
+                        <li class="nxl-item"><a class="nxl-link fs-6"
+                                href="index.php?controller=paiement&action=index">Liste des
+                                payements</a></li>
+                    </ul>
+                </li>
                 <?php endif; ?>
 
                 <li class="nxl-item nxl-hasmenu">
@@ -64,9 +64,9 @@
                     </a>
                     <ul class="nxl-submenu">
                         <?php if ($_SESSION['user']['role'] === 'ADMIN' || $_SESSION['user']['role'] === 'BUREAU'): ?>
-                            <li class="nxl-item"><a class="nxl-link fs-6"
-                                    href="index.php?controller=membre&action=add">Ajouter un
-                                    membre</a></li>
+                        <li class="nxl-item"><a class="nxl-link fs-6"
+                                href="index.php?controller=membre&action=add">Ajouter un
+                                membre</a></li>
                         <?php endif; ?>
                         <li class="nxl-item"><a class="nxl-link fs-6"
                                 href="index.php?controller=membre&action=index">Rechercher
@@ -84,20 +84,20 @@
                 </li>
                 <!--  -->
                 <?php if ($_SESSION['user']['role'] === 'ADMIN' || $_SESSION['user']['role'] === 'BUREAU'): ?>
-                    <li class="nxl-item nxl-hasmenu">
-                        <a href="javascript:void(0);" class="nxl-link">
-                            <!-- icone responsable -->
-                            <span class="nxl-micon"><i class="feather-user-check"></i></span>
-                            <span class="nxl-mtext fs-6">Responsable</span><span class="nxl-arrow"><i
-                                    class="feather-chevron-right"></i></span>
-                        </a>
-                        <ul class="nxl-submenu">
+                <li class="nxl-item nxl-hasmenu">
+                    <a href="javascript:void(0);" class="nxl-link">
+                        <!-- icone responsable -->
+                        <span class="nxl-micon"><i class="feather-user-check"></i></span>
+                        <span class="nxl-mtext fs-6">Responsable</span><span class="nxl-arrow"><i
+                                class="feather-chevron-right"></i></span>
+                    </a>
+                    <ul class="nxl-submenu">
 
-                            <li class="nxl-item"><a class="nxl-link fs-6" href="index.php?controller=responsable">Créer
-                                    responsable</a>
-                            </li>
-                        </ul>
-                    </li>
+                        <li class="nxl-item"><a class="nxl-link fs-6" href="index.php?controller=responsable">Créer
+                                responsable</a>
+                        </li>
+                    </ul>
+                </li>
                 <?php endif; ?>
                 <li class="nxl-item nxl-hasmenu">
                     <a href="index.php?controller=sortiefond" class="nxl-link">
@@ -114,13 +114,23 @@
                     </a>
                 </li>
                 <?php if ($_SESSION['user']['role'] === 'ADMIN' || $_SESSION['user']['role'] === 'BUREAU'): ?>
-                    <li class="nxl-item nxl-hasmenu">
-                        <a href="index.php?controller=presence&action=index" class="nxl-link">
-                            <span class="nxl-micon"><i class="feather-user-check"></i></span>
-                            <span class="nxl-mtext text-opacity-100 fs-6">Presence</span><span class="nxl-arrow"><i
-                                    class=""></i></span>
-                        </a>
-                    </li>
+                <li class="nxl-item nxl-hasmenu">
+                    <a href="index.php?controller=presence&action=index" class="nxl-link">
+                        <span class="nxl-micon"><i class="feather-user-check"></i></span>
+                        <span class="nxl-mtext text-opacity-100 fs-6">Presence</span><span class="nxl-arrow"><i
+                                class=""></i></span>
+                    </a>
+                </li>
+                <?php endif; ?>
+
+                <?php if ($_SESSION['user']['role'] === 'ADMIN' || $_SESSION['user']['role'] === 'BUREAU'): ?>
+                <li class="nxl-item nxl-hasmenu">
+                    <a href="index.php?controller=pointage&action=index" class="nxl-link">
+                        <span class="nxl-micon"><i class="feather-user-check"></i></span>
+                        <span class="nxl-mtext text-opacity-100 fs-6">Pointage</span><span class="nxl-arrow"><i
+                                class=""></i></span>
+                    </a>
+                </li>
                 <?php endif; ?>
 
                 <!-- Déconnexion placer en bas -->
