@@ -35,7 +35,7 @@ class CarteController
 // ."&code=".urlencode($membre['code_secret']);
 
 
-        $url = "http://192.168.137.34/cotisation/public/index.php?controller=verification&action=formulaire"
+        $url = "http://192.168.137.113/cotisation/public/index.php?controller=verification&action=formulaire"
             . "&cin=" . $membre['CIN']
             . "&numcart=" . urlencode($membre['numcart'])
             . "&code=" . $membre['code_secret'];

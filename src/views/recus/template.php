@@ -110,10 +110,10 @@ $pdf->Ln(6);
 $pdf->SetFont('Arial', '', 10);
 $pdf->Cell(40, 6, 'Enregistre par :');
 $pdf->SetTextColor(0, 60, 150);
-$pdf->Cell(0, 6, 'ROBIHASINA Nirina Korias');
+$pdf->Cell(0, 6, $responsables[0]['nomresponsable'] . ' ' . $responsables[0]['prenomresponsable'], 0, 1);
 $pdf->SetTextColor(0, 0, 0);
 
 $pdf->Ln(20);
-$pdf->Cell(0, 6, 'Fait a Votre Ville, le '.date('d/m/Y'), 0, 1);
+$pdf->Cell(0, 6, 'Fait a Antananarivo, le '.date('d/m/Y'), 0, 1);
 $pdf->Ln(15);
 $pdf->Cell(0, 6, 'Signature :', 0, 1, 'R');

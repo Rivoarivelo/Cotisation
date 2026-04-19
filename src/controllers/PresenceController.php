@@ -13,10 +13,10 @@ class PresenceController
         require __DIR__ . '/../views/layout/dashboard.php';
     }
 
-    // 🔴 appelé par QR code (AJAX)
+    // appelé par QR code (AJAX)
     public function scan()
     {
-        // 🔴 BLOQUER toute sortie parasite
+        //BLOQUER toute sortie parasite
         ob_clean();
         header('Content-Type: application/json');
 
@@ -45,7 +45,7 @@ class PresenceController
         }
     }
 
-    // ✅ VALIDER PRESENCE
+    // VALIDER PRESENCE
     public function valider()
     {
         // header('Content-Type: application/json');
@@ -84,11 +84,24 @@ class PresenceController
     public function exportPDF()
     {
         require_once __DIR__ . '/../../vendor/fpdf/fpdf.php';
-
         $data = $_SESSION['presence_data'];
 
         $pdf = new FPDF();
         $pdf->AddPage();
+
+        // LOGO transparent
+        // Sauvegarde position actuelle
+        $x = 35;     // position X (ajuste si besoin)
+        $y = 20;     // position Y
+        $w = 140;    // largeur du logo (GRAND)
+
+        // Logo très clair / transparent recommandé
+        $pdf->Image(
+            __DIR__ . '/../../public/photos/logo1.png',
+            $x,
+            $y,
+            $w
+        );
 
         $pdf->SetFont('Arial', 'B', 14);
 
@@ -102,20 +115,20 @@ class PresenceController
 
         // TABLE HEADER
         $pdf->SetFont('Arial', 'B', 10);
-        $pdf->Cell(50, 10, 'Nom', 1);
-        $pdf->Cell(50, 10, 'Prenom', 1);
-        $pdf->Cell(50, 10, 'Date', 1);
-        $pdf->Cell(50, 10, 'Heure', 1);
+        $pdf->Cell(40, 10, 'Nom', 1);
+        $pdf->Cell(40, 10, 'Prenom', 1);
+        $pdf->Cell(40, 10, 'Date', 1);
+        $pdf->Cell(40, 10, 'Heure', 1);
         $pdf->Ln();
 
         // DATA
         $pdf->SetFont('Arial', '', 10);
 
         foreach ($data['liste'] as $m) {
-            $pdf->Cell(50, 10, $m['nom'], 1);
-            $pdf->Cell(50, 10, $m['prenom'], 1);
-            // $pdf->Cell(50, 10, $m['date_event'], 1);
-            // $pdf->Cell(50, 10, $m['heure_presence'], 1);
+            $pdf->Cell(40, 10, $m['nom'], 1);
+            $pdf->Cell(40, 10, $m['prenom'], 1);
+            $pdf->Cell(40, 10, $m['date_event'], 1);
+            $pdf->Cell(40, 10, $m['heure_scan'], 1);
 
 
             $pdf->Ln();
@@ -167,9 +180,13 @@ class PresenceController
                 'CIN' => $m['cin'],
                 'numcart' => $m['num_carte'],
                 'nom' => $m['nom'],
-                'prenom' => $m['prenom']
+                'prenom' => $m['prenom'],
+                'heure_scan' => $m['heure_scan']
             ], $titre, $date_event);
         }
+
+        PresenceTempModel::vider();
+
 
         $_SESSION['presence_data'] = [
             'titre' => $titre,
@@ -180,7 +197,10 @@ class PresenceController
         echo json_encode([
             'redirect' => 'index.php?controller=presence&action=liste'
         ]);
+
+
     }
+
 
 
 }

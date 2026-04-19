@@ -14,39 +14,37 @@
       <h4 class="text-darken">ADHESION</h4>
       <table class="table table-bordered  table-sm">
         <thead class="table-success">
-          <tr class="text-center" >
+          <tr class="text-center">
             <th>CIN</th>
             <th>Nom et Prenom</th>
             <th>Action</th>
           </tr>
         </thead>
         <tbody class="text-center">
-<?php foreach ($adhesions as $a): ?>
-<tr class="text-center <?= empty($a['existe']) ? 'table-success' : '' ?>">
+          <?php foreach ($adhesions as $a): ?>
+            <tr class="text-center <?= empty($a['existe']) ? 'table-success' : '' ?>">
 
-  <td><?= $a['CIN'] ?></td>
-  <td><?= $a['nom'] .' '. $a['prenom'] ?></td>
+              <td><?= $a['CIN'] ?></td>
+              <td><?= $a['nom'] . ' ' . $a['prenom'] ?></td>
 
-  <td>
-    <a href="index.php?controller=sync&action=syncOne&cin=<?= $a['CIN'] ?>"
-       class="btn btn-sm btn-primary">
-       ➜
-    </a>
-  </td>
+              <td>
+                <a href="index.php?controller=sync&action=syncOne&cin=<?= $a['CIN'] ?>" class="btn btn-sm btn-primary">
+                  ➜
+                </a>
+              </td>
 
-</tr>
-<?php endforeach; ?>
-</tbody>
+            </tr>
+          <?php endforeach; ?>
+        </tbody>
       </table>
       <div class="mt-3 text-center">
-           <a href="index.php?controller=sync&action=syncAll"
-                         class="btn btn-success">
-                         🔄 Tout synchroniser
-                   </a>
+        <a href="index.php?controller=sync&action=syncAll" class="btn btn-success">
+          🔄 Tout synchroniser
+        </a>
       </div>
 
     </div>
- 
+
     <!-- TABLE COMPTA -->
     <div class="card col-md-6 ms-5 border border-1 border-black">
       <h4 class="text-darken">COMPTA</h4>
@@ -62,24 +60,24 @@
         <tbody class="text-center">
           <?php foreach ($compta as $m): ?>
             <?php
-                  $nouveau = false;
+            $nouveau = false;
 
-                  if (!empty($m['date_adhesion'])) {
-                      $dateAdh = strtotime($m['date_adhesion']);
-                      $limite = strtotime('+30 days', $dateAdh);
+            if (!empty($m['date_adhesion'])) {
+              $dateAdh = strtotime($m['date_adhesion']);
+              $limite = strtotime('+30 days', $dateAdh);
 
-                      if (time() <= $limite) {
-                          $nouveau = true;
-                      }
-                  }
-                  ?>
-          <tr class="<?= $nouveau ? 'table-success' : '' ?>">
-            <td><?= $m['CIN'] ?></td>
-            <td><?= $m['nom'] .' ' .$m['prenom'] ?></td>
+              if (time() <= $limite) {
+                $nouveau = true;
+              }
+            }
+            ?>
+            <tr class="<?= $nouveau ? 'table-success' : '' ?>">
+              <td><?= $m['CIN'] ?></td>
+              <td><?= $m['nom'] . ' ' . $m['prenom'] ?></td>
 
-            <td><?= $m['numcart'] ?? '-' ?></td>
-            <td><?= number_format($m['montant'],0,',',' ') ?> Ar</td>
-          </tr>
+              <td><?= $m['numcart'] ?? '-' ?></td>
+              <td><?= number_format($m['montant'], 0, ',', ' ') ?> Ar</td>
+            </tr>
           <?php endforeach; ?>
         </tbody>
       </table>

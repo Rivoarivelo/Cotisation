@@ -21,6 +21,7 @@ class PresenceModel
             $membre['prenom'],
             $titre,
             $date_event
+            // $membre['heure_scan']
         ]);
     }
 }

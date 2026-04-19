@@ -9,8 +9,8 @@ class PresenceTempModel
         $db = Database::compta();
 
         $stmt = $db->prepare("
-            INSERT INTO presence_temp (cin, nom, prenom, num_carte)
-            VALUES (?, ?, ?, ?)
+            INSERT INTO presence_temp (cin, nom, prenom, num_carte,date_event, heure_scan)
+            VALUES (?, ?, ?, ?, CURRENT_DATE(), CURRENT_TIME())
         ");
 
         $stmt->execute($data);
@@ -50,5 +50,12 @@ class PresenceTempModel
         SELECT * FROM presence_temp 
         WHERE statut = 'VALIDE'
     ")->fetchAll(PDO::FETCH_ASSOC);
+    }
+
+    // vider la table temporaire
+    public static function vider()
+    {
+        $db = Database::compta();
+        $db->exec("DELETE FROM presence_temp");
     }
 }

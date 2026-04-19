@@ -25,7 +25,7 @@ class LoginMembreApiController
             exit;
         }
 
-        $sql = "SELECT CIN, nom, prenom, numcart
+        $sql = "SELECT *
                 FROM membre
                 WHERE CIN = ? AND numcart = ?";
 

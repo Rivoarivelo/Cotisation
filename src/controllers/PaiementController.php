@@ -27,6 +27,7 @@ class PaiementController {
     $totalEntree = $model->totalEntree();
 
     $soldeRestant = $totalEntree - $totalSortie;
+    $responsables = $conn->query("SELECT * FROM responsable")->fetchAll(PDO::FETCH_ASSOC);
 
     // require __DIR__ . '/../views/paiements/index.php';
     $view = __DIR__ . '/../views/paiements/index.php';

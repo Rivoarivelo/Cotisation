@@ -1,7 +1,7 @@
 <?php
 require_once __DIR__ . '/../models/MembreModel.php';
 require_once __DIR__ . '/../models/PresenceModel.php';
-
+require_once __DIR__ . '/../models/PresenceTempModel.php';
 class VerificationController
 {
 
@@ -29,6 +29,10 @@ class VerificationController
 
         $membre = MembreModel::verifyCarte($cin, $numcart, $code);
 
+         if (!$membre) {
+            die("Carte invalide");
+        }
+
         // après vérification OK
         PresenceTempModel::ajouter([
             $membre['CIN'],
@@ -36,10 +40,6 @@ class VerificationController
             $membre['prenom'],
             $membre['numcart']
         ]);
-
-        if (!$membre) {
-            die("Carte invalide");
-        }
 
         // ✅ ENREGISTRER PRESENCE
         // PresenceModel::enregistrer(

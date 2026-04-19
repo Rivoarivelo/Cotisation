@@ -116,7 +116,7 @@
                 <?php if ($_SESSION['user']['role'] === 'ADMIN' || $_SESSION['user']['role'] === 'BUREAU'): ?>
                     <li class="nxl-item nxl-hasmenu">
                         <a href="index.php?controller=presence&action=index" class="nxl-link">
-                            <span class="nxl-micon"><i class="feather-alert-circle"></i></span>
+                            <span class="nxl-micon"><i class="feather-user-check"></i></span>
                             <span class="nxl-mtext text-opacity-100 fs-6">Presence</span><span class="nxl-arrow"><i
                                     class=""></i></span>
                         </a>

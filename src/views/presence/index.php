@@ -1,52 +1,59 @@
-<div class="container mt-4">
+<div class="container mt-4 ">
+    <div class="card d-flex flex-column gap-5 p-3">
+        <div class="card shadow-lg p-3">
+            <h3 class="card-title text-center  fw-bold">Fiche de présence</h3>
 
-    <h3>Fiche de présence</h3>
+            <!-- FORM -->
+            <div class="card p-3 mb-3">
+                <input type="text" id="titre" class="form-control mb-2" placeholder="Motif (ex: Réunion)">
+                <input type="date" id="date_event" class="form-control">
+            </div>
+        </div>
+        <!-- Font Bold -->
 
-    <!-- FORM -->
-    <div class="card p-3 mb-3">
-        <input type="text" id="titre" class="form-control mb-2" placeholder="Motif (ex: Réunion)">
-        <input type="date" id="date_event" class="form-control">
+        <div>
+            <h3 class="card-title text-center ">Demandes de présence</h3>
+
+            <table class="table table-bordered border-1 border-darken">
+                <thead>
+                    <tr>
+                        <th>Nom</th>
+                        <th>Prénom</th>
+                        <th>Action</th>
+                        <th>Date</th>
+                        <th>Heure</th>
+                    </tr>
+                </thead>
+
+                <tbody id="listeTemp"></tbody>
+            </table>
+
+            <button onclick="validerPresenceFinal()" class="btn btn-primary w-100 mt-3">
+                Valider présence
+            </button>
+        </div>
+
     </div>
-
-    <h4>Demandes de présence</h4>
-
-    <table class="table table-bordered">
-        <thead>
-            <tr>
-                <th>Nom</th>
-                <th>Prénom</th>
-                <th>Action</th>
-            </tr>
-        </thead>
-
-        <tbody id="listeTemp"></tbody>
-    </table>
-
-    <button onclick="validerPresenceFinal()" class="btn btn-primary w-100 mt-3">
-        Valider présence
-    </button>
-
 </div>
-
 <script>
-    let liste = [];
+let liste = [];
 
-    // ajouter membre
-    function ajouterMembre(data) {
+// ajouter membre
+function ajouterMembre(data) {
 
-        if (liste.find(m => m.CIN === data.CIN)) return;
+    if (liste.find(m => m.CIN === data.CIN)) return;
 
-        // date/heure local
-        let now = new Date();
-        let date = now.toLocaleDateString();
-        let heure = now.toLocaleTimeString();
+    // date/heure local
+    let now = new Date();
+    let date = now.toLocaleDateString();
+    let heure = now.toLocaleTimeString();
 
-        data.date = date;
-        data.heure = heure;
+    data.date = date;
+    data.heure = heure;
 
-        liste.push(data);
+    liste.push(data);
 
-        let row = `
+    let row = `
     <tr>
         <td>${data.CIN}</td>
         <td>${data.nom}</td>
@@ -55,48 +62,48 @@
         <td>${heure}</td>
     </tr>`;
 
-        document.getElementById('listePresence').innerHTML += row;
-    }
+    document.getElementById('listePresence').innerHTML += row;
+}
 
-    // scan QR
-    function scanQR(cin) {
+// scan QR
+function scanQR(cin) {
 
-        fetch(`index.php?controller=presence&action=scan&cin=${cin}`)
-            .then(res => res.text())
-            .then(text => {
+    fetch(`index.php?controller=presence&action=scan&cin=${cin}`)
+        .then(res => res.text())
+        .then(text => {
 
-                try {
-                    let data = JSON.parse(text);
+            try {
+                let data = JSON.parse(text);
 
-                    if (data.error) {
-                        alert(data.error);
-                        return;
-                    }
-
-                    ajouterMembre(data);
-
-                } catch (e) {
-                    console.error("Erreur JSON :", text);
+                if (data.error) {
+                    alert(data.error);
+                    return;
                 }
 
-            })
-            .catch(err => {
-                console.error("Erreur fetch :", err);
-            });
+                ajouterMembre(data);
+
+            } catch (e) {
+                console.error("Erreur JSON :", text);
+            }
+
+        })
+        .catch(err => {
+            console.error("Erreur fetch :", err);
+        });
+}
+
+// valider présence
+function validerPresence() {
+
+    let titre = document.getElementById('titre').value;
+    let date_event = document.getElementById('date_event').value;
+
+    if (!titre || !date_event) {
+        alert("Remplir le motif et la date");
+        return;
     }
 
-    // valider présence
-    function validerPresence() {
-
-        let titre = document.getElementById('titre').value;
-        let date_event = document.getElementById('date_event').value;
-
-        if (!titre || !date_event) {
-            alert("Remplir le motif et la date");
-            return;
-        }
-
-        fetch("index.php?controller=presence&action=valider", {
+    fetch("index.php?controller=presence&action=valider", {
             method: "POST",
             headers: {
                 'Content-Type': 'application/json'
@@ -107,25 +114,25 @@
                 liste: liste
             })
         })
-            .then(res => res.json())
-            .then(res => {
-                window.location.href = res.redirect;
-            });
-    }
+        .then(res => res.json())
+        .then(res => {
+            window.location.href = res.redirect;
+        });
+}
 
 
-    // charger demandes en attente
-    function chargerDemandes() {
+// charger demandes en attente
+function chargerDemandes() {
 
-        fetch("index.php?controller=presence&action=getTemp")
-            .then(res => res.json())
-            .then(data => {
+    fetch("index.php?controller=presence&action=getTemp")
+        .then(res => res.json())
+        .then(data => {
 
-                let html = '';
+            let html = '';
 
-                data.forEach(m => {
+            data.forEach(m => {
 
-                    html += `
+                html += `
             <tr>
                 <td>${m.nom}</td>
                 <td>${m.prenom}</td>
@@ -133,52 +140,55 @@
                     <button onclick="valider(${m.id})" class="btn btn-success btn-sm">✔</button>
                     <button onclick="rejeter(${m.id})" class="btn btn-danger btn-sm">✖</button>
                 </td>
+                <td>${m.date_event}</td>
+                <td>${m.heure_scan}</td>
+                
             </tr>`;
-                });
-
-                document.getElementById('listeTemp').innerHTML = html;
             });
-    }
 
-    // auto refresh (temps réel)
-    setInterval(chargerDemandes, 2000);
+            document.getElementById('listeTemp').innerHTML = html;
+        });
+}
 
-    // valider demande
-    function valider(id) {
+// auto refresh (temps réel)
+setInterval(chargerDemandes, 2000);
 
-        fetch("index.php?controller=presence&action=validerTemp", {
+// valider demande
+function valider(id) {
+
+    fetch("index.php?controller=presence&action=validerTemp", {
             method: "POST",
             headers: {
                 'Content-Type': 'application/x-www-form-urlencoded'
             },
             body: `id=${id}`
         })
-            .then(() => chargerDemandes());
-    }
+        .then(() => chargerDemandes());
+}
 
-    function rejeter(id) {
+function rejeter(id) {
 
-        fetch("index.php?controller=presence&action=rejeterTemp", {
+    fetch("index.php?controller=presence&action=rejeterTemp", {
             method: "POST",
             headers: {
                 'Content-Type': 'application/x-www-form-urlencoded'
             },
             body: `id=${id}`
         })
-            .then(() => chargerDemandes());
+        .then(() => chargerDemandes());
+}
+
+function validerPresenceFinal() {
+
+    let titre = document.getElementById('titre').value;
+    let date_event = document.getElementById('date_event').value;
+
+    if (!titre || !date_event) {
+        alert("Remplir le motif et la date");
+        return;
     }
 
-    function validerPresenceFinal() {
-
-        let titre = document.getElementById('titre').value;
-        let date_event = document.getElementById('date_event').value;
-
-        if (!titre || !date_event) {
-            alert("Remplir le motif et la date");
-            return;
-        }
-
-        fetch("index.php?controller=presence&action=validerAll", {
+    fetch("index.php?controller=presence&action=validerAll", {
             method: "POST",
             headers: {
                 'Content-Type': 'application/json'
@@ -188,9 +198,9 @@
                 date_event: date_event
             })
         })
-            .then(res => res.json())
-            .then(res => {
-                window.location.href = res.redirect;
-            });
-    }
+        .then(res => res.json())
+        .then(res => {
+            window.location.href = res.redirect;
+        });
+}
 </script>
