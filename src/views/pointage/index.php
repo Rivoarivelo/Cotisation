@@ -1,21 +1,22 @@
 <div class="container mt-4">
+    <div class="card shadow-lg p-3">
+        <h3 class="text-center">POINTAGE</h3>
 
-    <h3 class="text-center">Système de Pointage</h3>
+        <table class="table table-bordered">
+            <thead class="table-dark">
+                <tr>
+                    <th>CIN</th>
+                    <th>Nom</th>
+                    <th>Prénom</th>
+                    <th>Date</th>
+                    <th>Heure</th>
+                </tr>
+            </thead>
 
-    <table class="table table-bordered">
-        <thead class="table-dark">
-            <tr>
-                <th>CIN</th>
-                <th>Nom</th>
-                <th>Prénom</th>
-                <th>Date</th>
-                <th>Heure</th>
-            </tr>
-        </thead>
+            <tbody id="listePointage"></tbody>
 
-        <tbody id="listePointage"></tbody>
-
-    </table>
+        </table>
+    </div>
 
 </div>
 

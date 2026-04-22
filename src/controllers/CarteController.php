@@ -35,13 +35,13 @@ class CarteController
 // ."&code=".urlencode($membre['code_secret']);
 
 
-        // $url = "http://192.168.137.113/cotisation/public/index.php?controller=verification&action=formulaire"
-        //     . "&cin=" . $membre['CIN']
-        //     . "&numcart=" . urlencode($membre['numcart'])
-        //     . "&code=" . $membre['code_secret'];
+        $url = "http://192.168.137.243/cotisation/public/index.php?controller=verification&action=formulaire"
+            . "&cin=" . $membre['CIN']
+            . "&numcart=" . urlencode($membre['numcart'])
+            . "&code=" . $membre['code_secret'];
 
-        $url = "http://192.168.137.235/cotisation/public/index.php?controller=pointage&action=scan&cin=" 
-     . $membre['CIN'];
+    //     $url = "http://192.168.137.235/cotisation/public/index.php?controller=pointage&action=scan&cin=" 
+    //  . $membre['CIN'];
 
         $result = Builder::create()
             ->writer(new PngWriter())

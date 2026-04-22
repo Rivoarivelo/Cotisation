@@ -38,6 +38,6 @@ class PointageController {
     public function get()
     {
         header('Content-Type: application/json');
-        echo json_encode(PointageModel::getToday());
+        echo json_encode(PointageModel::getALL());
     }
 }
