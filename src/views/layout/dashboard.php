@@ -100,7 +100,7 @@
                 </li>
                 <?php endif; ?>
                 <li class="nxl-item nxl-hasmenu">
-                    <a href="index.php?controller=sortiefond" class="nxl-link">
+                    <a href="index.php?controller=SortieFond" class="nxl-link">
                         <span class="nxl-micon"><i class="feather-users"></i></span>
                         <span class="nxl-mtext fs-6">Sortie de fonds</span><span class="nxl-arrow"><i
                                 class=""></i></span>
@@ -126,7 +126,7 @@
                 <?php if ($_SESSION['user']['role'] === 'ADMIN' || $_SESSION['user']['role'] === 'BUREAU'): ?>
                 <li class="nxl-item nxl-hasmenu">
                     <a href="index.php?controller=pointage&action=index" class="nxl-link">
-                        <span class="nxl-micon"><i class="feather-user-check"></i></span>
+                        <span class="nxl-micon"><i class="feather-clock"></i></span>
                         <span class="nxl-mtext text-opacity-100 fs-6">Pointage</span><span class="nxl-arrow"><i
                                 class=""></i></span>
                     </a>

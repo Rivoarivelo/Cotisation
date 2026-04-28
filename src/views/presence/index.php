@@ -1,4 +1,9 @@
 <div class="container mt-4 ">
+    <div class="mb-3 text-end">
+        <a href="index.php?controller=presence&action=historique" class="btn btn-dark">
+            📂 Historique
+        </a>
+    </div>
     <div class="card d-flex flex-column gap-5 p-3">
         <div class="card shadow-lg p-3">
             <h3 class="card-title text-center  fw-bold">Fiche de présence</h3>

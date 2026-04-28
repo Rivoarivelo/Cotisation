@@ -24,4 +24,30 @@ class PresenceModel
             // $membre['heure_scan']
         ]);
     }
+
+    // HISTORIQUE
+    public static function getHistorique($date = null, $titre = null)
+    {
+    $db = Database::compta();
+    // Requête de base
+    $sql = "SELECT * FROM fiche_presence WHERE 1=1";
+    $params = [];
+
+    if ($date) {
+        $sql .= " AND date_event = ?";
+        $params[] = $date;
+    }
+
+    if ($titre) {
+        $sql .= " AND titre LIKE ?";
+        $params[] = "%$titre%";
+    }
+
+    $sql .= " ORDER BY id DESC";
+
+    $stmt = $db->prepare($sql);
+    $stmt->execute($params);
+
+    return $stmt->fetchAll(PDO::FETCH_ASSOC);
+    }
 }

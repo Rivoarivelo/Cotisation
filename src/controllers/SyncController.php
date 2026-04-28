@@ -7,6 +7,7 @@ class SyncController {
 
     public function index()
     {
+        // Récupérer les données des deux tables
         $adhesions = SyncMembreModel::allAdhesion();
         $compta = SyncMembreModel::allCompta();
         // require __DIR__ . '/../views/sync/index.php';
@@ -16,6 +17,7 @@ class SyncController {
 
     public function syncOne()
     {
+        // Récupérer le CIN du membre à synchroniser
         $cin = $_GET['cin'];
         SyncMembreModel::syncOne($cin);
 

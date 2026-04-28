@@ -201,6 +201,20 @@ class PresenceController
 
     }
 
+    // HISTORIQUE
+    public function historique()
+{
+    require_once __DIR__ . '/../models/PresenceModel.php';
+
+    $date = $_GET['date'] ?? null;
+    $titre = $_GET['titre'] ?? null;
+
+    $data = PresenceModel::getHistorique($date, $titre);
+
+    $view = __DIR__ . '/../views/presence/historique.php';
+    require __DIR__ . '/../views/layout/dashboard.php';
+}
+
 
 
 }
